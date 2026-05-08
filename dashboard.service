@@ -1,0 +1,28 @@
+# systemd service for the dashboard server (Linux).
+#
+# Setup:
+#   1. Edit User, WorkingDirectory, and ExecStart paths below.
+#   2. sudo cp dashboard.service /etc/systemd/system/
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable dashboard
+#   5. sudo systemctl start dashboard
+#
+# Logs: journalctl -u dashboard -f
+
+[Unit]
+Description=Home Dashboard Server
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME/claude-projects/home-dashboard/server
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

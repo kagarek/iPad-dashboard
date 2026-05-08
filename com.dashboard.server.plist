@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd service for the dashboard server.
+
+  Setup:
+    1. Edit WorkingDirectory and ProgramArguments paths to match your system.
+    2. cp com.dashboard.server.plist ~/Library/LaunchAgents/
+    3. launchctl load ~/Library/LaunchAgents/com.dashboard.server.plist
+
+  To stop:
+    launchctl unload ~/Library/LaunchAgents/com.dashboard.server.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.dashboard.server</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/node</string>
+    <string>/Users/YOUR_USERNAME/claude-projects/home-dashboard/server/index.js</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/YOUR_USERNAME/claude-projects/home-dashboard/server</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>NODE_ENV</key>
+    <string>production</string>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/dashboard.stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/dashboard.stderr.log</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>
