@@ -47,10 +47,13 @@ router.get('/', function(req, res) {
 
       var c = data.current;
 
-      // Convert ISO sunrise/sunset strings to unix timestamps if present
+      // Extract daily fields (all arrays — index 0 is today)
       var daily   = data.daily || {};
-      var sunrise = daily.sunrise && daily.sunrise[0] ? Math.floor(new Date(daily.sunrise[0]).getTime() / 1000) : null;
-      var sunset  = daily.sunset  && daily.sunset[0]  ? Math.floor(new Date(daily.sunset[0]).getTime()  / 1000) : null;
+      var sunrise  = daily.sunrise         && daily.sunrise[0]          ? Math.floor(new Date(daily.sunrise[0]).getTime() / 1000) : null;
+      var sunset   = daily.sunset          && daily.sunset[0]           ? Math.floor(new Date(daily.sunset[0]).getTime()  / 1000) : null;
+      var temp_max = daily.temperature_2m_max && daily.temperature_2m_max[0] != null ? Math.round(daily.temperature_2m_max[0]) : null;
+      var temp_min = daily.temperature_2m_min && daily.temperature_2m_min[0] != null ? Math.round(daily.temperature_2m_min[0]) : null;
+      var uv_index = daily.uv_index_max    && daily.uv_index_max[0]    != null ? Math.round(daily.uv_index_max[0])            : null;
 
       var result = {
         city:        config.weather.city,
@@ -60,6 +63,9 @@ router.get('/', function(req, res) {
         icon:        '',
         humidity:    c.relative_humidity_2m,
         wind_speed:  c.wind_speed_10m,
+        temp_max:    temp_max,
+        temp_min:    temp_min,
+        uv_index:    uv_index,
         sunrise:     sunrise,
         sunset:      sunset,
         updated_at:  new Date().toISOString(),

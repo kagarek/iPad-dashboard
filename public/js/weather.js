@@ -23,8 +23,27 @@ function renderWeather(data) {
     return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
   }
 
+  // uvLabel — returns a human-readable risk level for a UV index value.
+  function uvLabel(uv) {
+    if (uv <= 2)  { return 'Low'; }
+    if (uv <= 5)  { return 'Moderate'; }
+    if (uv <= 7)  { return 'High'; }
+    if (uv <= 10) { return 'Very High'; }
+    return 'Extreme';
+  }
+
   document.getElementById('weather-city').textContent = data.city;
   document.getElementById('weather-temp').textContent = data.temp + '°C';
+
+  // Min/max line — shown only when both values are present.
+  var rangeEl = document.getElementById('weather-range');
+  if (data.temp_min != null && data.temp_max != null) {
+    rangeEl.textContent    = '↓' + data.temp_min + '°  ↑' + data.temp_max + '°';
+    rangeEl.style.display  = 'block';
+  } else {
+    rangeEl.style.display  = 'none';
+  }
+
   document.getElementById('weather-desc').textContent = data.description;
 
   // Build details lines — values are all numbers so innerHTML is safe here.
@@ -32,6 +51,9 @@ function renderWeather(data) {
     'Feels like ' + data.feels_like + '°C',
     'Humidity ' + data.humidity + '%  ·  Wind ' + data.wind_speed + ' m/s',
   ];
+  if (data.uv_index != null) {
+    lines.push('UV ' + data.uv_index + ' — ' + uvLabel(data.uv_index));
+  }
   if (data.sunrise && data.sunset) {
     lines.push('Sunrise ' + fmtTime(data.sunrise) + '  ·  Sunset ' + fmtTime(data.sunset));
   }
