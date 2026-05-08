@@ -35,8 +35,28 @@
 
       <div id="widget-news" class="widget">
         <div id="news-loading" class="status-msg">Loading news…</div>
-        <ul id="news-list" style="display:none"></ul>
         <div id="news-error" class="error-msg" style="display:none">⚠ updating…</div>
+        <div id="news-content" style="display:none">
+
+          <!-- Left column: Worldwide on top, Croatia below -->
+          <div class="news-col">
+            <div class="news-subcol">
+              <div class="news-col-label">Worldwide</div>
+              <ul id="news-list-worldwide" class="news-col-list"></ul>
+            </div>
+            <div class="news-subcol">
+              <div class="news-col-label">Croatia</div>
+              <ul id="news-list-croatia" class="news-col-list"></ul>
+            </div>
+          </div>
+
+          <!-- Right column: Ukraine -->
+          <div class="news-col">
+            <div class="news-col-label">Ukraine</div>
+            <ul id="news-list-ukraine" class="news-col-list"></ul>
+          </div>
+
+        </div><!-- /#news-content -->
       </div>
 
     </div><!-- /#bottom-row -->

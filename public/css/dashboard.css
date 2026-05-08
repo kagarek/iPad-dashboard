@@ -149,35 +149,123 @@ html, body {
 #widget-news {
   -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
 }
 
-#news-list {
+/* Three-column layout inside the news widget */
+#news-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.news-col {
+  -webkit-flex: 1;
+  flex: 1;
+  padding: 0 16px;
+  border-right: 1px solid #1e1e32;
+  overflow: hidden;
+}
+
+.news-col:first-child {
+  padding-left: 0;
+}
+
+.news-col:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+
+/* Stacked sub-sections inside a column (e.g. Worldwide + Croatia) */
+.news-subcol {
+  margin-bottom: 14px;
+}
+
+.news-subcol:last-child {
+  margin-bottom: 0;
+}
+
+.news-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #404060;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #1e1e32;
+}
+
+.news-col-list {
   list-style: none;
   padding: 0;
 }
 
-#news-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #1e1e32;
+.news-col-list li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1a2e;
 }
 
-#news-list li:last-child {
+.news-col-list li:last-child {
   border-bottom: none;
 }
 
-.news-title {
+/* Headline thumbnail — fixed width on the left, iOS 9 safe background-image */
+.news-img {
+  -webkit-flex: 0 0 72px;
+  flex: 0 0 72px;
+  height: 52px;
+  background-size: cover;
+  -webkit-background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+/* Text block fills the remaining width */
+.news-text {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.news-col-list a {
   display: block;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 1.3;
-  color: #c8c8e0;
+  color: #c0c0e0;
+  text-decoration: none;
 }
 
 .news-source {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
-  color: #404058;
+  color: #383850;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 3px;
