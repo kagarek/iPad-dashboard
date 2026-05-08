@@ -1,0 +1,43 @@
+# systemd service for the dashboard server (Linux).
+#
+# Setup:
+#   1. Replace YOUR_USERNAME and verify the node path (`which node`).
+#   2. sudo cp server/systemd/dashboard.service /etc/systemd/system/
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable dashboard
+#   5. sudo systemctl start dashboard
+#
+# Useful commands:
+#   sudo systemctl status dashboard        — check if running
+#   sudo journalctl -u dashboard -f        — live log stream
+#   sudo systemctl restart dashboard       — manual restart
+#   sudo systemctl stop dashboard          — stop the service
+
+[Unit]
+Description=Home Dashboard Server
+# Wait for the network to be up before starting
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME/claude-projects/iPad-dashboard/server
+ExecStart=/usr/bin/node index.js
+
+# Restart on failure, but not on clean exit (exit code 0)
+Restart=on-failure
+RestartSec=10
+
+# Stop trying to restart after 5 failures within 60 seconds
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# Pipe logs to the systemd journal (view with journalctl -u dashboard)
+StandardOutput=journal
+StandardError=journal
+
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

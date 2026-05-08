@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024">
+  <!-- Fallback full-page reload every hour in case JS stops working -->
+  <meta http-equiv="refresh" content="3600">
+  <title>Home Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <div id="dashboard">
+
+    <!-- Clock widget — full-width top row -->
+    <div id="widget-clock" class="widget">
+      <div id="clock-time">--:--:--</div>
+      <div id="clock-date">---</div>
+    </div>
+
+    <!-- Bottom row: weather left, news right -->
+    <div id="bottom-row">
+
+      <div id="widget-weather" class="widget">
+        <div id="weather-loading" class="status-msg">Loading weather…</div>
+        <div id="weather-content" style="display:none">
+          <div id="weather-city"></div>
+          <div id="weather-temp"></div>
+          <div id="weather-desc"></div>
+          <div id="weather-details"></div>
+        </div>
+        <div id="weather-error" class="error-msg" style="display:none">⚠ updating…</div>
+      </div>
+
+      <div id="widget-news" class="widget">
+        <div id="news-loading" class="status-msg">Loading news…</div>
+        <ul id="news-list" style="display:none"></ul>
+        <div id="news-error" class="error-msg" style="display:none">⚠ updating…</div>
+      </div>
+
+    </div><!-- /#bottom-row -->
+
+  </div><!-- /#dashboard -->
+
+  <!-- ES5-compatible scripts, loaded in dependency order -->
+  <script src="js/weather.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>

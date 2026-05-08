@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd service for the dashboard server.
+
+  Before installing, find your Node.js path:
+    which node
+  Common values:
+    /usr/local/bin/node          (Homebrew, Intel Mac)
+    /opt/homebrew/bin/node       (Homebrew, Apple Silicon)
+    /usr/local/nvm/versions/...  (nvm — use the full path from `which node`)
+
+  Setup:
+    1. Replace YOUR_USERNAME and the node path below.
+    2. cp server/launchd/com.dashboard.server.plist ~/Library/LaunchAgents/
+    3. launchctl load ~/Library/LaunchAgents/com.dashboard.server.plist
+
+  Check status:  launchctl list | grep dashboard
+  View logs:     tail -f /tmp/dashboard.stdout.log /tmp/dashboard.stderr.log
+  Stop:          launchctl unload ~/Library/LaunchAgents/com.dashboard.server.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.dashboard.server</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/node</string>
+    <string>/Users/YOUR_USERNAME/claude-projects/iPad-dashboard/server/index.js</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/YOUR_USERNAME/claude-projects/iPad-dashboard/server</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>NODE_ENV</key>
+    <string>production</string>
+  </dict>
+
+  <!-- Restart automatically if the process exits for any reason -->
+  <key>KeepAlive</key>
+  <true/>
+
+  <!-- Wait 10 seconds between restarts to avoid a rapid crash loop -->
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+
+  <!-- Log stdout and stderr to files that survive a server restart -->
+  <key>StandardOutPath</key>
+  <string>/tmp/dashboard.stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/dashboard.stderr.log</string>
+
+  <!-- Start the service automatically when the user logs in -->
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>

@@ -1,0 +1,190 @@
+/* dashboard.css — dark theme, landscape 1024x768, iOS 9 Safari compatible.
+   Uses only webkit-prefixed flexbox. No grid, no gap, no CSS variables. */
+
+/* --- Reset & base --- */
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0d0d0d;
+  color: #f0f0f0;
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-text-size-adjust: none;
+}
+
+/* --- Outer layout: column so clock sits on top, bottom row fills the rest --- */
+#dashboard {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+/* --- Bottom row: weather panel left, news panel right --- */
+#bottom-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 10px;
+}
+
+/* --- Generic widget card --- */
+.widget {
+  background-color: #16162a;
+  border-radius: 14px;
+  padding: 22px 26px;
+  overflow: hidden;
+}
+
+/* ============================================================
+   CLOCK WIDGET
+   ============================================================ */
+#widget-clock {
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 14px 24px 18px;
+}
+
+#clock-time {
+  font-size: 96px;
+  font-weight: 100;
+  letter-spacing: 8px;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(100, 140, 255, 0.35);
+}
+
+#clock-date {
+  font-size: 20px;
+  font-weight: 300;
+  color: #7070a0;
+  margin-top: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   WEATHER WIDGET
+   ============================================================ */
+#widget-weather {
+  -webkit-flex: 0 0 300px;
+  flex: 0 0 300px;
+  margin-right: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+#weather-city {
+  font-size: 12px;
+  font-weight: 500;
+  color: #505080;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+#weather-temp {
+  font-size: 80px;
+  font-weight: 100;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+#weather-desc {
+  font-size: 22px;
+  font-weight: 300;
+  color: #a0a0c8;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+#weather-details {
+  font-size: 14px;
+  color: #505068;
+  line-height: 2;
+  border-top: 1px solid #22223a;
+  padding-top: 14px;
+}
+
+/* ============================================================
+   NEWS WIDGET
+   ============================================================ */
+#widget-news {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+#news-list {
+  list-style: none;
+  padding: 0;
+}
+
+#news-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #1e1e32;
+}
+
+#news-list li:last-child {
+  border-bottom: none;
+}
+
+.news-title {
+  display: block;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.3;
+  color: #c8c8e0;
+}
+
+.news-source {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: #404058;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 3px;
+}
+
+/* ============================================================
+   SHARED STATUS / ERROR
+   ============================================================ */
+.status-msg {
+  font-size: 15px;
+  color: #404050;
+}
+
+.error-msg {
+  font-size: 14px;
+  color: #a03030;
+}
