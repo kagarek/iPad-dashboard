@@ -6,9 +6,14 @@
 
 (function() {
 
-  // --- Configuration (mirrors server defaults) ---
+  // --- Configuration ---
   var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
   var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
+  var WAKE_HOUR           = 7;                 // show dashboard from 07:00
+  var SLEEP_HOUR          = 22;                // blank screen from 22:00
+
+  // _sleeping tracks the last known sleep state to detect transitions.
+  var _sleeping = null;
 
   // xhrGet — fires an XHR GET and calls callback(parsedJson) on success,
   // or callback(null) on any error.
@@ -35,10 +40,49 @@
   // pad — zero-pads a number to two digits without ES6.
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-  // updateClock — writes current time and date into the clock widget.
+  // fetchWeather — polls the weather API and passes data to the renderer.
+  function fetchWeather() {
+    xhrGet('/api/weather', function(data) {
+      renderWeather(data);
+    });
+  }
+
+  // fetchNews — polls the news categories API and passes data to the renderer.
+  function fetchNews() {
+    xhrGet('/api/news/categories', function(data) {
+      renderNews(data);
+    });
+  }
+
+  // checkSleepMode — shows or hides the black overlay based on current hour.
+  // Called every second; only acts when the state actually changes.
+  function checkSleepMode() {
+    var hour        = new Date().getHours();
+    var shouldSleep = (hour >= SLEEP_HOUR || hour < WAKE_HOUR);
+
+    if (shouldSleep === _sleeping) { return; }
+    _sleeping = shouldSleep;
+
+    var overlay   = document.getElementById('sleep-screen');
+    var dashboard = document.getElementById('dashboard');
+
+    if (shouldSleep) {
+      overlay.style.display   = 'block';
+      dashboard.style.display = 'none';
+    } else {
+      overlay.style.display   = 'none';
+      dashboard.style.display = '';
+      // Refresh data immediately on wake so the dashboard is never stale.
+      fetchWeather();
+      fetchNews();
+    }
+  }
+
+  // updateClock — writes current time and date into the clock widget,
+  // then checks whether sleep mode should be toggled.
   function updateClock() {
-    var now  = new Date();
-    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var now    = new Date();
+    var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var months = ['January','February','March','April','May','June',
                   'July','August','September','October','November','December'];
 
@@ -47,20 +91,8 @@
 
     document.getElementById('clock-date').textContent =
       days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-  }
 
-  // fetchWeather — polls the weather API and passes data to the renderer.
-  function fetchWeather() {
-    xhrGet('/api/weather', function(data) {
-      renderWeather(data);
-    });
-  }
-
-  // fetchNews — polls the news API and passes data to the renderer.
-  function fetchNews() {
-    xhrGet('/api/news', function(data) {
-      renderNews(data);
-    });
+    checkSleepMode();
   }
 
   // init — starts all polling loops after the DOM is ready.
