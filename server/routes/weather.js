@@ -47,13 +47,20 @@ router.get('/', function(req, res) {
 
       var c = data.current;
 
-      // Extract daily fields (all arrays — index 0 is today)
+      // Extract daily fields (all arrays — index 0 is today, index 1 is tomorrow)
       var daily   = data.daily || {};
-      var sunrise  = daily.sunrise         && daily.sunrise[0]          ? Math.floor(new Date(daily.sunrise[0]).getTime() / 1000) : null;
-      var sunset   = daily.sunset          && daily.sunset[0]           ? Math.floor(new Date(daily.sunset[0]).getTime()  / 1000) : null;
-      var temp_max = daily.temperature_2m_max && daily.temperature_2m_max[0] != null ? Math.round(daily.temperature_2m_max[0]) : null;
-      var temp_min = daily.temperature_2m_min && daily.temperature_2m_min[0] != null ? Math.round(daily.temperature_2m_min[0]) : null;
-      var uv_index = daily.uv_index_max    && daily.uv_index_max[0]    != null ? Math.round(daily.uv_index_max[0])            : null;
+      var sunrise  = daily.sunrise             && daily.sunrise[0]             ? Math.floor(new Date(daily.sunrise[0]).getTime()             / 1000) : null;
+      var sunset   = daily.sunset              && daily.sunset[0]              ? Math.floor(new Date(daily.sunset[0]).getTime()              / 1000) : null;
+      var temp_max = daily.temperature_2m_max  && daily.temperature_2m_max[0]  != null ? Math.round(daily.temperature_2m_max[0])  : null;
+      var temp_min = daily.temperature_2m_min  && daily.temperature_2m_min[0]  != null ? Math.round(daily.temperature_2m_min[0])  : null;
+      var uv_index = daily.uv_index_max        && daily.uv_index_max[0]        != null ? Math.round(daily.uv_index_max[0])        : null;
+
+      var tmr_sunrise  = daily.sunrise             && daily.sunrise[1]             ? Math.floor(new Date(daily.sunrise[1]).getTime()             / 1000) : null;
+      var tmr_sunset   = daily.sunset              && daily.sunset[1]              ? Math.floor(new Date(daily.sunset[1]).getTime()              / 1000) : null;
+      var tmr_temp_max = daily.temperature_2m_max  && daily.temperature_2m_max[1]  != null ? Math.round(daily.temperature_2m_max[1])  : null;
+      var tmr_temp_min = daily.temperature_2m_min  && daily.temperature_2m_min[1]  != null ? Math.round(daily.temperature_2m_min[1])  : null;
+      var tmr_uv_index = daily.uv_index_max        && daily.uv_index_max[1]        != null ? Math.round(daily.uv_index_max[1])        : null;
+      var tmr_code     = daily.weather_code        && daily.weather_code[1]        != null ? daily.weather_code[1]                    : null;
 
       var result = {
         city:        config.weather.city,
@@ -68,6 +75,14 @@ router.get('/', function(req, res) {
         uv_index:    uv_index,
         sunrise:     sunrise,
         sunset:      sunset,
+        tomorrow: {
+          temp_max:    tmr_temp_max,
+          temp_min:    tmr_temp_min,
+          description: tmr_code != null ? (WMO_DESCRIPTIONS[tmr_code] || 'unknown') : null,
+          uv_index:    tmr_uv_index,
+          sunrise:     tmr_sunrise,
+          sunset:      tmr_sunset,
+        },
         updated_at:  new Date().toISOString(),
       };
 

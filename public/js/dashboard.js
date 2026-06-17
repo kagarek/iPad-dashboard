@@ -10,7 +10,7 @@
   var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
   var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
   var WAKE_HOUR           = 7;                 // show dashboard from 07:00
-  var SLEEP_HOUR          = 22;                // blank screen from 22:00
+  var SLEEP_HOUR          = 23;                // blank screen from 23:00
 
   // _sleeping tracks the last known sleep state to detect transitions.
   var _sleeping = null;
@@ -93,6 +93,7 @@
       days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
 
     checkSleepMode();
+    checkWeatherMode();
   }
 
   // init — starts all polling loops after the DOM is ready.

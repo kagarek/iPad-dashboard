@@ -19,22 +19,8 @@ html, body {
   -webkit-text-size-adjust: none;
 }
 
-/* --- Outer layout: column so clock sits on top, bottom row fills the rest --- */
+/* --- Outer layout: row — left panel | news --- */
 #dashboard {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-
-/* --- Bottom row: weather panel left, news panel right --- */
-#bottom-row {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -42,18 +28,33 @@ html, body {
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-  min-height: 0;
-  margin-top: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
 
 /* --- Generic widget card --- */
 .widget {
   background-color: #16162a;
   border-radius: 14px;
-  padding: 22px 26px;
+  padding: 22px 24px;
   overflow: hidden;
+}
+
+/* ============================================================
+   LEFT PANEL — clock stacked above weather
+   ============================================================ */
+#panel-left {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex: 0 0 280px;
+  flex: 0 0 280px;
+  margin-right: 10px;
 }
 
 /* ============================================================
@@ -63,24 +64,25 @@ html, body {
   -webkit-flex: 0 0 auto;
   flex: 0 0 auto;
   text-align: center;
-  padding: 14px 24px 18px;
+  padding: 18px 16px 20px;
+  margin-bottom: 10px;
 }
 
 #clock-time {
-  font-size: 96px;
+  font-size: 54px;
   font-weight: 100;
-  letter-spacing: 8px;
+  letter-spacing: 1px;
   color: #ffffff;
   line-height: 1;
-  text-shadow: 0 0 60px rgba(100, 140, 255, 0.35);
+  text-shadow: 0 0 40px rgba(100, 140, 255, 0.35);
 }
 
 #clock-date {
-  font-size: 20px;
+  font-size: 13px;
   font-weight: 300;
   color: #7070a0;
   margin-top: 8px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -88,9 +90,9 @@ html, body {
    WEATHER WIDGET
    ============================================================ */
 #widget-weather {
-  -webkit-flex: 0 0 300px;
-  flex: 0 0 300px;
-  margin-right: 10px;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -108,47 +110,220 @@ html, body {
   font-weight: 500;
   color: #505080;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-bottom: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
 }
 
 #weather-temp {
-  font-size: 80px;
+  font-size: 72px;
   font-weight: 100;
   color: #ffffff;
   line-height: 1;
   margin-bottom: 4px;
 }
 
-#weather-range {
-  font-size: 18px;
+/* Today row: scale on the left, info on the right */
+#weather-today {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+#weather-scale {
+  -webkit-flex: 0 0 38px;
+  flex: 0 0 38px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  margin-right: 16px;
+}
+
+#weather-scale-max,
+#weather-scale-min {
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+  font-size: 12px;
   font-weight: 300;
-  color: #6060a0;
-  margin-bottom: 10px;
+  color: #5050a0;
+  line-height: 1;
+}
+
+#weather-scale-track {
+  -webkit-flex: 0 0 100px;
+  flex: 0 0 100px;
+  width: 38px;
+  position: relative;
+  margin: 5px 0;
+}
+
+#weather-scale-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  background: #22223a;
+  border-radius: 2px;
+}
+
+#weather-scale-indicator {
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  width: 10px;
+  height: 10px;
+  background: #8888e8;
+  border-radius: 5px;
+  /* top set by JS */
+}
+
+#weather-info {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 #weather-desc {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 300;
   color: #a0a0c8;
   text-transform: capitalize;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 #weather-details {
-  font-size: 14px;
+  font-size: 15px;
   color: #505068;
-  line-height: 2;
-  border-top: 1px solid #22223a;
-  padding-top: 14px;
+  line-height: 1.8;
 }
 
 /* ============================================================
-   NEWS WIDGET
+   TOMORROW WIDGET (separate card, shown from 17:00)
    ============================================================ */
-#widget-news {
+#widget-weather-tomorrow {
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+  margin-top: 10px;
+}
+
+#tmr-city {
+  font-size: 12px;
+  font-weight: 500;
+  color: #505080;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+#tmr-today {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+#tmr-scale {
+  -webkit-flex: 0 0 38px;
+  flex: 0 0 38px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  margin-right: 16px;
+}
+
+#tmr-scale-max,
+#tmr-scale-min {
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 300;
+  color: #5050a0;
+  line-height: 1;
+}
+
+#tmr-scale-track {
+  -webkit-flex: 0 0 70px;
+  flex: 0 0 70px;
+  width: 38px;
+  position: relative;
+  margin: 5px 0;
+}
+
+#tmr-scale-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  background: #22223a;
+  border-radius: 2px;
+}
+
+#tmr-info {
   -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
+  min-width: 0;
+}
+
+#tmr-temp {
+  font-size: 48px;
+  font-weight: 100;
+  color: #c0c0e0;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+#tmr-desc {
+  font-size: 18px;
+  font-weight: 300;
+  color: #8080a8;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+#tmr-details {
+  font-size: 13px;
+  color: #404058;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   NEWS PANELS — two separate cards side by side
+   ============================================================ */
+#widget-news-world,
+#widget-news-ua {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin-left: 10px;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -158,38 +333,22 @@ html, body {
   flex-direction: column;
 }
 
-/* Three-column layout inside the news widget */
-#news-content {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  flex-direction: row;
+#news-world-content,
+#news-ua-content {
   -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 0;
-}
-
-.news-col {
-  -webkit-flex: 1;
-  flex: 1;
-  padding: 0 16px;
-  border-right: 1px solid #1e1e32;
   overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
 }
 
-.news-col:first-child {
-  padding-left: 0;
-}
-
-.news-col:last-child {
-  padding-right: 0;
-  border-right: none;
-}
-
-/* Stacked sub-sections inside a column (e.g. Worldwide + Croatia) */
+/* Stacked sub-sections inside a panel (e.g. Worldwide + Croatia) */
 .news-subcol {
   margin-bottom: 14px;
 }
@@ -225,7 +384,7 @@ html, body {
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   align-items: flex-start;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #1a1a2e;
 }
 
@@ -254,21 +413,45 @@ html, body {
 
 .news-col-list a {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
-  line-height: 1.3;
+  line-height: 1.35;
   color: #c0c0e0;
   text-decoration: none;
 }
 
+/* Meta row: source label on the left, timestamp on the right */
+.news-meta {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+  align-items: baseline;
+  margin-top: 5px;
+}
+
 .news-source {
-  display: block;
   font-size: 11px;
   font-weight: 400;
   color: #383850;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-top: 3px;
+}
+
+.news-time {
+  font-size: 11px;
+  font-weight: 300;
+  color: #454568;
+  white-space: nowrap;
+  padding-left: 8px;
 }
 
 /* ============================================================

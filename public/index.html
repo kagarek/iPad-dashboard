@@ -7,63 +7,93 @@
   <meta http-equiv="refresh" content="3600">
   <title>Home Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
 
   <div id="dashboard">
 
-    <!-- Clock widget — full-width top row -->
-    <div id="widget-clock" class="widget">
-      <div id="clock-time">--:--:--</div>
-      <div id="clock-date">---</div>
-    </div>
+    <!-- Left panel: clock on top, weather below -->
+    <div id="panel-left">
 
-    <!-- Bottom row: weather left, news right -->
-    <div id="bottom-row">
+      <div id="widget-clock" class="widget">
+        <div id="clock-time">--:--:--</div>
+        <div id="clock-date">---</div>
+      </div>
 
       <div id="widget-weather" class="widget">
         <div id="weather-loading" class="status-msg">Loading weather…</div>
         <div id="weather-content" style="display:none">
           <div id="weather-city"></div>
-          <div id="weather-temp"></div>
-          <div id="weather-range"></div>
-          <div id="weather-desc"></div>
-          <div id="weather-details"></div>
+          <div id="weather-today">
+            <div id="weather-scale">
+              <div id="weather-scale-max"></div>
+              <div id="weather-scale-track">
+                <div id="weather-scale-bar"></div>
+                <div id="weather-scale-indicator"></div>
+              </div>
+              <div id="weather-scale-min"></div>
+            </div>
+            <div id="weather-info">
+              <div id="weather-temp"></div>
+              <div id="weather-desc"></div>
+              <div id="weather-details"></div>
+            </div>
+          </div>
         </div>
         <div id="weather-error" class="error-msg" style="display:none">⚠ updating…</div>
       </div>
 
-      <div id="widget-news" class="widget">
-        <div id="news-loading" class="status-msg">Loading news…</div>
-        <div id="news-error" class="error-msg" style="display:none">⚠ updating…</div>
-        <div id="news-content" style="display:none">
-
-          <!-- Left column: Worldwide on top, Croatia below -->
-          <div class="news-col">
-            <div class="news-subcol">
-              <div class="news-col-label">Worldwide</div>
-              <ul id="news-list-worldwide" class="news-col-list"></ul>
+      <div id="widget-weather-tomorrow" class="widget" style="display:none">
+        <div id="tmr-city">Tomorrow</div>
+        <div id="tmr-today">
+          <div id="tmr-scale">
+            <div id="tmr-scale-max"></div>
+            <div id="tmr-scale-track">
+              <div id="tmr-scale-bar"></div>
             </div>
-            <div class="news-subcol">
-              <div class="news-col-label">Croatia</div>
-              <ul id="news-list-croatia" class="news-col-list"></ul>
-            </div>
+            <div id="tmr-scale-min"></div>
           </div>
-
-          <!-- Right column: Ukraine -->
-          <div class="news-col">
-            <div class="news-col-label">Ukraine</div>
-            <ul id="news-list-ukraine" class="news-col-list"></ul>
+          <div id="tmr-info">
+            <div id="tmr-temp"></div>
+            <div id="tmr-desc"></div>
+            <div id="tmr-details"></div>
           </div>
-
-        </div><!-- /#news-content -->
+        </div>
       </div>
 
-    </div><!-- /#bottom-row -->
+    </div><!-- /#panel-left -->
+
+    <!-- World / Croatia news panel -->
+    <div id="widget-news-world" class="widget">
+      <div id="news-world-loading" class="status-msg">Loading news…</div>
+      <div id="news-world-error" class="error-msg" style="display:none">⚠ updating…</div>
+      <div id="news-world-content" style="display:none">
+        <div class="news-subcol">
+          <div class="news-col-label">Worldwide</div>
+          <ul id="news-list-worldwide" class="news-col-list"></ul>
+        </div>
+        <div class="news-subcol">
+          <div class="news-col-label">Croatia</div>
+          <ul id="news-list-croatia" class="news-col-list"></ul>
+        </div>
+      </div>
+    </div><!-- /#widget-news-world -->
+
+    <!-- Ukraine news panel -->
+    <div id="widget-news-ua" class="widget">
+      <div id="news-ua-loading" class="status-msg">Loading news…</div>
+      <div id="news-ua-error" class="error-msg" style="display:none">⚠ updating…</div>
+      <div id="news-ua-content" style="display:none">
+        <div class="news-col-label">Ukraine</div>
+        <ul id="news-list-ukraine" class="news-col-list"></ul>
+      </div>
+    </div><!-- /#widget-news-ua -->
 
   </div><!-- /#dashboard -->
 
-  <!-- Full-screen black overlay shown during 22:00–07:00 -->
+  <!-- Full-screen black overlay shown during 23:00–07:00 -->
   <div id="sleep-screen"></div>
 
   <!-- ES5-compatible scripts, loaded in dependency order -->
