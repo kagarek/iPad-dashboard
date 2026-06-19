@@ -61,33 +61,21 @@ function renderList(listId, items) {
   }
 }
 
-// renderNews — updates both news panels from the /categories API response,
-// or shows the error state in both panels if data is null or contains an error field.
+// renderNews — updates the Ukraine news panel from the /categories API response,
+// or shows the error state if data is null or contains an error field.
 function renderNews(data) {
-  var worldLoading = document.getElementById('news-world-loading');
-  var worldContent = document.getElementById('news-world-content');
-  var worldError   = document.getElementById('news-world-error');
-  var uaLoading    = document.getElementById('news-ua-loading');
-  var uaContent    = document.getElementById('news-ua-content');
-  var uaError      = document.getElementById('news-ua-error');
+  var uaLoading = document.getElementById('news-ua-loading');
+  var uaContent = document.getElementById('news-ua-content');
+  var uaError   = document.getElementById('news-ua-error');
 
   if (!data || data.error) {
-    worldLoading.style.display = 'none';
-    worldContent.style.display = 'none';
-    worldError.style.display   = 'block';
-    uaLoading.style.display    = 'none';
-    uaContent.style.display    = 'none';
-    uaError.style.display      = 'block';
+    uaLoading.style.display = 'none';
+    uaContent.style.display = 'none';
+    uaError.style.display   = 'block';
     return;
   }
 
-  renderList('news-list-worldwide', data.worldwide || []);
-  renderList('news-list-croatia',   data.croatia   || []);
-  renderList('news-list-ukraine',   data.ukraine   || []);
-
-  worldLoading.style.display = 'none';
-  worldError.style.display   = 'none';
-  worldContent.style.display = '';
+  renderList('news-list-ukraine', data.ukraine || []);
 
   uaLoading.style.display = 'none';
   uaError.style.display   = 'none';

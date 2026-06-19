@@ -65,21 +65,21 @@
 
     </div><!-- /#panel-left -->
 
-    <!-- World / Croatia news panel -->
-    <div id="widget-news-world" class="widget">
-      <div id="news-world-loading" class="status-msg">Loading news…</div>
-      <div id="news-world-error" class="error-msg" style="display:none">⚠ updating…</div>
-      <div id="news-world-content" style="display:none">
-        <div class="news-subcol">
-          <div class="news-col-label">Worldwide</div>
-          <ul id="news-list-worldwide" class="news-col-list"></ul>
-        </div>
-        <div class="news-subcol">
-          <div class="news-col-label">Croatia</div>
-          <ul id="news-list-croatia" class="news-col-list"></ul>
-        </div>
+    <!-- Croatian flashcard panel -->
+    <div id="widget-flashcard" class="widget" onclick="toggleFlashcard()">
+      <div id="flashcard-front">
+        <div id="flashcard-theme"></div>
+        <div id="flashcard-word"></div>
+        <div id="flashcard-phrase"></div>
+        <div id="flashcard-hint">Торкніться для перекладу</div>
       </div>
-    </div><!-- /#widget-news-world -->
+      <div id="flashcard-back" style="display:none">
+        <div id="flashcard-label">🇺🇦 Переклад</div>
+        <div id="flashcard-translation"></div>
+        <div id="flashcard-phrase-tr"></div>
+        <div id="flashcard-countdown"></div>
+      </div>
+    </div><!-- /#widget-flashcard -->
 
     <!-- Ukraine news panel -->
     <div id="widget-news-ua" class="widget">
@@ -99,6 +99,9 @@
   <!-- ES5-compatible scripts, loaded in dependency order -->
   <script src="js/weather.js"></script>
   <script src="js/news.js"></script>
+  <script src="js/flashcard-data.js"></script>
+  <script src="js/flashcard-phrases.js"></script>
+  <script src="js/flashcard.js"></script>
   <script src="js/dashboard.js"></script>
 
 </body>

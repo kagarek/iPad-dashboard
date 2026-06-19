@@ -7,10 +7,11 @@
 (function() {
 
   // --- Configuration ---
-  var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
-  var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
-  var WAKE_HOUR           = 7;                 // show dashboard from 07:00
-  var SLEEP_HOUR          = 23;                // blank screen from 23:00
+  var WEATHER_INTERVAL_MS   = 10 * 60 * 1000;   // 10 minutes
+  var NEWS_INTERVAL_MS      =  5 * 60 * 1000;   //  5 minutes
+  var FLASHCARD_INTERVAL_MS =  5 * 60 * 1000;   //  5 minutes
+  var WAKE_HOUR             = 7;                 // show dashboard from 07:00
+  var SLEEP_HOUR            = 23;                // blank screen from 23:00
 
   // _sleeping tracks the last known sleep state to detect transitions.
   var _sleeping = null;
@@ -106,6 +107,9 @@
 
     fetchNews();
     setInterval(fetchNews, NEWS_INTERVAL_MS);
+
+    renderFlashcard();
+    setInterval(renderFlashcard, FLASHCARD_INTERVAL_MS);
   }
 
   // Wait for DOM to be ready (iOS 9 safe)
