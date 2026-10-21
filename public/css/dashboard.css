@@ -42,7 +42,7 @@ html, body {
 }
 
 /* ============================================================
-   LEFT PANEL — clock stacked above weather
+   LEFT PANEL — today's weather stacked above tomorrow
    ============================================================ */
 #panel-left {
   display: -webkit-box;
@@ -55,35 +55,6 @@ html, body {
   -webkit-flex: 0 0 280px;
   flex: 0 0 280px;
   margin-right: 10px;
-}
-
-/* ============================================================
-   CLOCK WIDGET
-   ============================================================ */
-#widget-clock {
-  -webkit-flex: 0 0 auto;
-  flex: 0 0 auto;
-  text-align: center;
-  padding: 18px 16px 20px;
-  margin-bottom: 10px;
-}
-
-#clock-time {
-  font-size: 54px;
-  font-weight: 100;
-  letter-spacing: 1px;
-  color: #ffffff;
-  line-height: 1;
-  text-shadow: 0 0 40px rgba(100, 140, 255, 0.35);
-}
-
-#clock-date {
-  font-size: 13px;
-  font-weight: 300;
-  color: #7070a0;
-  margin-top: 8px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
 /* ============================================================

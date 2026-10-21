@@ -1,5 +1,5 @@
 // dashboard.js — orchestrator.
-// Starts polling loops for weather, news, calendar and flashcards, and drives the live clock.
+// Starts polling loops for weather, news, calendar and flashcards, and toggles night sleep mode.
 // Must stay ES5-compatible (no const/let/arrow functions/template literals).
 
 /* global renderWeather, renderNews, renderCalendar, initCalendarSettings, renderFlashcard */
@@ -38,9 +38,6 @@
     };
     xhr.send();
   }
-
-  // pad — zero-pads a number to two digits without ES6.
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
   // fetchWeather — polls the weather API and passes data to the renderer.
   function fetchWeather() {
@@ -88,28 +85,16 @@
     }
   }
 
-  // updateClock — writes current time and date into the clock widget,
-  // then checks whether sleep mode should be toggled.
-  function updateClock() {
-    var now    = new Date();
-    var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-
-    document.getElementById('clock-time').textContent =
-      pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
-
-    document.getElementById('clock-date').textContent =
-      days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-
+  // tick — runs every second to switch sleep mode and weather mode on time.
+  function tick() {
     checkSleepMode();
     checkWeatherMode();
   }
 
   // init — starts all polling loops after the DOM is ready.
   function init() {
-    updateClock();
-    setInterval(updateClock, 1000);
+    tick();
+    setInterval(tick, 1000);
 
     fetchWeather();
     setInterval(fetchWeather, WEATHER_INTERVAL_MS);
