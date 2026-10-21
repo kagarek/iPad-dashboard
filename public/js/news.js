@@ -1,4 +1,4 @@
-// news.js — renders the three-column news widget from API data.
+// news.js — renders the news widget (Ukraine column) from API data.
 // ES5-compatible. Called by dashboard.js after each API response.
 
 // renderList — fills one category <ul> with linked news items and optional images.
@@ -37,7 +37,7 @@ function renderList(listId, items) {
   }
 }
 
-// renderNews — updates all three category columns from the /categories API response,
+// renderNews — updates the news column from the /categories API response,
 // or shows the error state if data is null or contains an error field.
 function renderNews(data) {
   var content = document.getElementById('news-content');
@@ -51,9 +51,7 @@ function renderNews(data) {
     return;
   }
 
-  renderList('news-list-worldwide', data.worldwide || []);
-  renderList('news-list-croatia',   data.croatia   || []);
-  renderList('news-list-ukraine',   data.ukraine   || []);
+  renderList('news-list-ukraine', data.ukraine || []);
 
   loading.style.display = 'none';
   error.style.display   = 'none';

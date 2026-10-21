@@ -3,6 +3,8 @@
 
 'use strict';
 
+var path = require('path');
+
 require('dotenv').config();
 
 function requireEnv(key) {
@@ -48,9 +50,30 @@ var config = Object.freeze({
     },
   },
 
+  calendar: {
+    // iCal links (iCloud public calendar "webcal://..." or Google "secret address")
+    icsUrls:   splitUrls(process.env.CALENDAR_ICS_URLS),
+    daysAhead: parseInt(process.env.CALENDAR_DAYS_AHEAD, 10) || 2, // 2 = today + tomorrow
+
+    // iCloud account login (Apple ID + app-specific password) to list and choose calendars
+    icloud: {
+      username:    process.env.ICLOUD_USERNAME || '',
+      appPassword: process.env.ICLOUD_APP_PASSWORD || '',
+      caldavUrl:   process.env.ICLOUD_CALDAV_URL || 'https://caldav.icloud.com/',
+    },
+
+    // Calendar names shown until a choice is made on the dashboard's settings side
+    defaultSelected: splitUrls(process.env.CALENDAR_DEFAULT_SELECTED),
+
+    // Where the dashboard remembers which calendars were chosen
+    selectionFile: process.env.CALENDAR_SELECTION_FILE ||
+                   path.join(__dirname, '..', 'data', 'calendar-selection.json'),
+  },
+
   cache: {
-    weatherTtlMs: parseInt(process.env.CACHE_WEATHER_TTL_MS, 10) || 600000,
-    newsTtlMs:    parseInt(process.env.CACHE_NEWS_TTL_MS,    10) || 300000,
+    weatherTtlMs:  parseInt(process.env.CACHE_WEATHER_TTL_MS,  10) || 600000,
+    newsTtlMs:     parseInt(process.env.CACHE_NEWS_TTL_MS,     10) || 300000,
+    calendarTtlMs: parseInt(process.env.CACHE_CALENDAR_TTL_MS, 10) || 300000,
   },
 });
 

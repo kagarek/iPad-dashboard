@@ -1,14 +1,15 @@
 // dashboard.js — orchestrator.
-// Starts polling loops for weather and news, and drives the live clock.
+// Starts polling loops for weather, news and calendar, and drives the live clock.
 // Must stay ES5-compatible (no const/let/arrow functions/template literals).
 
-/* global renderWeather, renderNews */
+/* global renderWeather, renderNews, renderCalendar, initCalendarSettings */
 
 (function() {
 
   // --- Configuration ---
   var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
   var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
+  var CALENDAR_INTERVAL_MS = 5 * 60 * 1000;   //  5 minutes
   var WAKE_HOUR           = 7;                 // show dashboard from 07:00
   var SLEEP_HOUR          = 22;                // blank screen from 22:00
 
@@ -54,6 +55,13 @@
     });
   }
 
+  // fetchCalendar — polls the calendar API and passes data to the renderer.
+  function fetchCalendar() {
+    xhrGet('/api/calendar', function(data) {
+      renderCalendar(data);
+    });
+  }
+
   // checkSleepMode — shows or hides the black overlay based on current hour.
   // Called every second; only acts when the state actually changes.
   function checkSleepMode() {
@@ -75,6 +83,7 @@
       // Refresh data immediately on wake so the dashboard is never stale.
       fetchWeather();
       fetchNews();
+      fetchCalendar();
     }
   }
 
@@ -105,6 +114,12 @@
 
     fetchNews();
     setInterval(fetchNews, NEWS_INTERVAL_MS);
+
+    fetchCalendar();
+    setInterval(fetchCalendar, CALENDAR_INTERVAL_MS);
+
+    // Tapping the calendar header flips to "choose calendars"; reload events after saving.
+    initCalendarSettings(fetchCalendar);
   }
 
   // Wait for DOM to be ready (iOS 9 safe)

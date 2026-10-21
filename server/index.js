@@ -10,16 +10,21 @@ var config  = require('./config/settings');
 var weatherRoute = require('./routes/weather');
 var newsRoute    = require('./routes/news');
 var timeRoute    = require('./routes/time');
+var calendarRoute = require('./routes/calendar');
 
 var app = express();
 
 // --- Static files (dashboard frontend) ---
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// --- Parse JSON request bodies (used by the calendar settings) ---
+app.use(express.json());
+
 // --- API routes ---
 app.use('/api/weather', weatherRoute);
 app.use('/api/news',    newsRoute);
 app.use('/api/time',    timeRoute);
+app.use('/api/calendar', calendarRoute);
 
 // --- 404 fallback ---
 app.use(function(req, res) {

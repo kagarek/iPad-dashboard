@@ -18,7 +18,7 @@
       <div id="clock-date">---</div>
     </div>
 
-    <!-- Bottom row: weather left, news right -->
+    <!-- Bottom row: weather left, calendar middle, news right -->
     <div id="bottom-row">
 
       <div id="widget-weather" class="widget">
@@ -33,24 +33,39 @@
         <div id="weather-error" class="error-msg" style="display:none">⚠ updating…</div>
       </div>
 
+      <!-- Calendar: a card that flips. Front = today/tomorrow events,
+           back = choose which iCloud calendars to show. Tap the header to flip. -->
+      <div id="widget-calendar">
+        <div id="cal-flipper">
+
+          <div id="cal-front" class="cal-face widget">
+            <div id="cal-front-header" class="cal-header">
+              <span class="cal-header-title">Calendar</span>
+              <span class="cal-header-action">&#9881;</span>
+            </div>
+            <div id="calendar-loading" class="status-msg">Loading calendar…</div>
+            <div id="calendar-error" class="error-msg" style="display:none">⚠ updating…</div>
+            <div id="calendar-content" style="display:none"></div>
+          </div>
+
+          <div id="cal-back" class="cal-face widget">
+            <div id="cal-back-header" class="cal-header">
+              <span class="cal-header-title">Choose calendars</span>
+              <span class="cal-header-action">Done</span>
+            </div>
+            <div id="cal-settings-status" class="status-msg"></div>
+            <ul id="cal-settings-list"></ul>
+          </div>
+
+        </div>
+      </div>
+
       <div id="widget-news" class="widget">
         <div id="news-loading" class="status-msg">Loading news…</div>
         <div id="news-error" class="error-msg" style="display:none">⚠ updating…</div>
         <div id="news-content" style="display:none">
 
-          <!-- Left column: Worldwide on top, Croatia below -->
-          <div class="news-col">
-            <div class="news-subcol">
-              <div class="news-col-label">Worldwide</div>
-              <ul id="news-list-worldwide" class="news-col-list"></ul>
-            </div>
-            <div class="news-subcol">
-              <div class="news-col-label">Croatia</div>
-              <ul id="news-list-croatia" class="news-col-list"></ul>
-            </div>
-          </div>
-
-          <!-- Right column: Ukraine -->
+          <!-- Ukraine news -->
           <div class="news-col">
             <div class="news-col-label">Ukraine</div>
             <ul id="news-list-ukraine" class="news-col-list"></ul>
@@ -69,6 +84,7 @@
   <!-- ES5-compatible scripts, loaded in dependency order -->
   <script src="js/weather.js"></script>
   <script src="js/news.js"></script>
+  <script src="js/calendar.js"></script>
   <script src="js/dashboard.js"></script>
 
 </body>

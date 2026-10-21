@@ -147,8 +147,9 @@ html, body {
    NEWS WIDGET
    ============================================================ */
 #widget-news {
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
+  -webkit-flex: 1 1 50%;
+  flex: 1 1 50%;
+  min-width: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -158,7 +159,7 @@ html, body {
   flex-direction: column;
 }
 
-/* Three-column layout inside the news widget */
+/* Column layout inside the news widget */
 #news-content {
   display: -webkit-box;
   display: -webkit-flex;
@@ -269,6 +270,258 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 3px;
+}
+
+/* ============================================================
+   CALENDAR WIDGET — sits between weather and news, same width as news.
+   It is a flip card: front = events, back = choose calendars.
+   ============================================================ */
+#widget-calendar {
+  -webkit-flex: 1 1 50%;
+  flex: 1 1 50%;
+  min-width: 0;
+  margin-right: 10px;
+  padding: 22px 26px; /* same as .widget so it sizes like the news panel; faces cover it */
+  position: relative;
+  -webkit-perspective: 1600px;
+  perspective: 1600px;
+}
+
+#cal-flipper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 0.6s ease;
+  transition: transform 0.6s ease;
+}
+
+#cal-flipper.flipped {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+/* Both sides fill the card; the hidden side's back is invisible */
+.cal-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+#cal-back {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tappable header row: title on the left, action (gear / Done) on the right */
+.cal-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  cursor: pointer; /* needed for taps to register on iOS Safari */
+  margin: -8px 0 14px;
+  padding: 8px 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.cal-header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7070a0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.cal-header-action {
+  font-size: 18px;
+  color: #505080;
+}
+
+#cal-back-header .cal-header-action {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a9ad8;
+}
+
+/* --- Settings side: one big tappable row per calendar --- */
+#cal-settings-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cal-option {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  min-height: 56px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1a2e;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.cal-option:last-child {
+  border-bottom: none;
+}
+
+.cal-option-dot {
+  -webkit-flex: 0 0 14px;
+  flex: 0 0 14px;
+  height: 14px;
+  border-radius: 7px;
+  margin-right: 14px;
+}
+
+.cal-option-text {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cal-option-name {
+  font-size: 18px;
+  font-weight: 300;
+  color: #e0e0f0;
+}
+
+.cal-option-sub {
+  font-size: 11px;
+  color: #505070;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* Round tick box: empty outline when off, filled with a tick when on */
+.cal-option-check {
+  -webkit-flex: 0 0 30px;
+  flex: 0 0 30px;
+  height: 30px;
+  border-radius: 15px;
+  border: 2px solid #33335a;
+  margin-left: 12px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 16px;
+  font-weight: 700;
+  color: transparent;
+}
+
+.cal-option.checked .cal-option-check {
+  background-color: #5a9ad8;
+  border-color: #5a9ad8;
+  color: #0d0d1a;
+}
+
+.cal-option:not(.checked) .cal-option-name {
+  color: #707090;
+}
+
+#cal-settings-status {
+  margin-bottom: 10px;
+}
+
+.cal-day {
+  margin-bottom: 18px;
+}
+
+.cal-day:last-child {
+  margin-bottom: 0;
+}
+
+.cal-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cal-event {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1a2e;
+}
+
+.cal-event:last-child {
+  border-bottom: none;
+}
+
+/* Time on the left, fixed width so titles line up */
+.cal-time {
+  -webkit-flex: 0 0 96px;
+  flex: 0 0 96px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #8080c0;
+  padding-top: 2px;
+}
+
+.cal-allday .cal-time {
+  color: #c0a060;
+}
+
+.cal-text {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cal-title {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.3;
+  color: #e0e0f0;
+}
+
+/* Calendar name under the title, one colour per calendar link */
+.cal-source {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 3px;
+  color: #5a9ad8; /* overridden by each calendar's own colour */
+}
+
+.cal-location {
+  font-size: 12px;
+  color: #505070;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-empty {
+  font-size: 15px;
+  font-weight: 300;
+  color: #404060;
+  padding: 8px 0;
 }
 
 /* ============================================================

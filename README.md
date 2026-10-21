@@ -2,7 +2,7 @@
 
 A local web dashboard served by a MacBook Pro (Node.js) and displayed full-screen on an iPad 2/3 over Wi-Fi.
 
-Shows a live clock, current weather, and top news headlines. No cloud account or paid API key required.
+Shows a live clock, current weather, today's and tomorrow's calendar events, and top news headlines. No cloud account or paid API key required.
 
 ---
 
@@ -56,6 +56,34 @@ No API key or account is needed — Open-Meteo is free.
 
 **To change the news source**, replace the URL in `NEWS_RSS_URLS` with any RSS feed URL.
 Multiple feeds are supported, separated by commas.
+
+**To show your iPad calendar (iCloud):**
+
+The dashboard can't read the iPad's Calendar app directly, so it signs in to the same
+iCloud account with an **app-specific password** (a separate password just for the
+dashboard, which you can cancel at any time without touching your real Apple ID password):
+
+1. On any browser go to [appleid.apple.com](https://appleid.apple.com) and sign in
+2. Open **Sign-In and Security → App-Specific Passwords**, click **+**, name it "Dashboard"
+3. Copy the password it shows (looks like `abcd-efgh-ijkl-mnop`)
+4. Put your Apple ID email and that password in `server/.env`:
+
+```
+ICLOUD_USERNAME=you@icloud.com
+ICLOUD_APP_PASSWORD=abcd-efgh-ijkl-mnop
+CALENDAR_DEFAULT_SELECTED=Max School,Family   # shown until you pick on the iPad
+CALENDAR_DAYS_AHEAD=2                         # 2 = today + tomorrow
+CACHE_CALENDAR_TTL_MS=300000                  # re-check every 5 min
+```
+
+**Choosing calendars on the iPad:** tap the **CALENDAR ⚙** header — the card flips over
+and lists every calendar in the iCloud account. Tap a calendar to tick/untick it, then tap
+**Done**. The choice is remembered (in `server/data/calendar-selection.json`) even after a
+restart. If left open, the card flips back on its own after 2 minutes.
+
+*Optional — calendar links instead of (or as well as) the iCloud login:* a calendar's
+"Public Calendar" link (`webcal://…`) or a Google Calendar "Secret address in iCal format"
+can be added to `CALENDAR_ICS_URLS` (comma-separated). They appear in the same list.
 
 ### 4. Start the server
 
@@ -159,13 +187,16 @@ sudo journalctl -u dashboard -f
 
 ## API endpoints
 
-The server exposes three JSON endpoints that the dashboard uses:
+The server exposes these JSON endpoints that the dashboard uses:
 
 | Endpoint | What it returns |
 |---|---|
 | `GET /api/weather` | Temperature, description, humidity, wind, sunrise/sunset — cached 10 min |
 | `GET /api/news` | Top headlines from the configured RSS feed — cached 5 min |
 | `GET /api/time` | Current server time and timezone |
+| `GET /api/calendar` | Today's and tomorrow's events from the chosen calendars — cached 5 min |
+| `GET /api/calendar/list` | Every available calendar and whether it is chosen |
+| `POST /api/calendar/selection` | Saves the chosen calendars (used by the flip-side of the calendar card) |
 
 You can open these in your browser to check they're working, e.g. `http://localhost:3000/api/weather`.
 
@@ -175,6 +206,9 @@ You can open these in your browser to check they're working, e.g. `http://localh
 
 **The page loads but weather shows "⚠ updating…"**
 Open `http://localhost:3000/api/weather` in your browser. If it returns `{"error": "..."}`, the problem will be described there. Most likely the `WEATHER_URL` in `.env` is malformed — go back to the Open-Meteo docs page and copy a fresh URL.
+
+**The calendar shows "⚠ updating…" or the calendar list shows an iCloud error**
+Open `http://localhost:3000/api/calendar/list` in your browser. `iCloud rejected the Apple ID or app-specific password` means the email or app-specific password in `.env` is wrong (or the password was revoked) — create a new one at appleid.apple.com. Restart the server after editing `.env`.
 
 **The iPad can't reach the server**
 - Make sure both devices are on the same Wi-Fi network
