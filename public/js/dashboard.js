@@ -7,11 +7,19 @@
 (function() {
 
   // --- Configuration ---
+<<<<<<< HEAD
   var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
   var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
   var CALENDAR_INTERVAL_MS = 5 * 60 * 1000;   //  5 minutes
   var WAKE_HOUR           = 7;                 // show dashboard from 07:00
   var SLEEP_HOUR          = 22;                // blank screen from 22:00
+=======
+  var WEATHER_INTERVAL_MS   = 10 * 60 * 1000;   // 10 minutes
+  var NEWS_INTERVAL_MS      =  5 * 60 * 1000;   //  5 minutes
+  var FLASHCARD_INTERVAL_MS =  5 * 60 * 1000;   //  5 minutes
+  var WAKE_HOUR             = 7;                 // show dashboard from 07:00
+  var SLEEP_HOUR            = 23;                // blank screen from 23:00
+>>>>>>> origin/main
 
   // _sleeping tracks the last known sleep state to detect transitions.
   var _sleeping = null;
@@ -102,6 +110,7 @@
       days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
 
     checkSleepMode();
+    checkWeatherMode();
   }
 
   // init — starts all polling loops after the DOM is ready.
@@ -115,11 +124,16 @@
     fetchNews();
     setInterval(fetchNews, NEWS_INTERVAL_MS);
 
+<<<<<<< HEAD
     fetchCalendar();
     setInterval(fetchCalendar, CALENDAR_INTERVAL_MS);
 
     // Tapping the calendar header flips to "choose calendars"; reload events after saving.
     initCalendarSettings(fetchCalendar);
+=======
+    renderFlashcard();
+    setInterval(renderFlashcard, FLASHCARD_INTERVAL_MS);
+>>>>>>> origin/main
   }
 
   // Wait for DOM to be ready (iOS 9 safe)

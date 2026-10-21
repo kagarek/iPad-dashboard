@@ -7,32 +7,50 @@
   <meta http-equiv="refresh" content="3600">
   <title>Home Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
 
   <div id="dashboard">
 
-    <!-- Clock widget — full-width top row -->
-    <div id="widget-clock" class="widget">
-      <div id="clock-time">--:--:--</div>
-      <div id="clock-date">---</div>
-    </div>
+    <!-- Left panel: clock on top, weather below -->
+    <div id="panel-left">
 
+<<<<<<< HEAD
     <!-- Bottom row: weather left, calendar middle, news right -->
     <div id="bottom-row">
+=======
+      <div id="widget-clock" class="widget">
+        <div id="clock-time">--:--:--</div>
+        <div id="clock-date">---</div>
+      </div>
+>>>>>>> origin/main
 
       <div id="widget-weather" class="widget">
         <div id="weather-loading" class="status-msg">Loading weather…</div>
         <div id="weather-content" style="display:none">
           <div id="weather-city"></div>
-          <div id="weather-temp"></div>
-          <div id="weather-range"></div>
-          <div id="weather-desc"></div>
-          <div id="weather-details"></div>
+          <div id="weather-today">
+            <div id="weather-scale">
+              <div id="weather-scale-max"></div>
+              <div id="weather-scale-track">
+                <div id="weather-scale-bar"></div>
+                <div id="weather-scale-indicator"></div>
+              </div>
+              <div id="weather-scale-min"></div>
+            </div>
+            <div id="weather-info">
+              <div id="weather-temp"></div>
+              <div id="weather-desc"></div>
+              <div id="weather-details"></div>
+            </div>
+          </div>
         </div>
         <div id="weather-error" class="error-msg" style="display:none">⚠ updating…</div>
       </div>
 
+<<<<<<< HEAD
       <!-- Calendar: a card that flips. Front = today/tomorrow events,
            back = choose which iCloud calendars to show. Tap the header to flip. -->
       <div id="widget-calendar">
@@ -69,22 +87,69 @@
           <div class="news-col">
             <div class="news-col-label">Ukraine</div>
             <ul id="news-list-ukraine" class="news-col-list"></ul>
+=======
+      <div id="widget-weather-tomorrow" class="widget" style="display:none">
+        <div id="tmr-city">Tomorrow</div>
+        <div id="tmr-today">
+          <div id="tmr-scale">
+            <div id="tmr-scale-max"></div>
+            <div id="tmr-scale-track">
+              <div id="tmr-scale-bar"></div>
+            </div>
+            <div id="tmr-scale-min"></div>
           </div>
-
-        </div><!-- /#news-content -->
+          <div id="tmr-info">
+            <div id="tmr-temp"></div>
+            <div id="tmr-desc"></div>
+            <div id="tmr-details"></div>
+>>>>>>> origin/main
+          </div>
+        </div>
       </div>
 
-    </div><!-- /#bottom-row -->
+    </div><!-- /#panel-left -->
+
+    <!-- Croatian flashcard panel -->
+    <div id="widget-flashcard" class="widget" onclick="toggleFlashcard()">
+      <div id="flashcard-front">
+        <div id="flashcard-theme"></div>
+        <div id="flashcard-word"></div>
+        <div id="flashcard-phrase"></div>
+        <div id="flashcard-hint">Торкніться для перекладу</div>
+      </div>
+      <div id="flashcard-back" style="display:none">
+        <div id="flashcard-label">🇺🇦 Переклад</div>
+        <div id="flashcard-translation"></div>
+        <div id="flashcard-phrase-tr"></div>
+        <div id="flashcard-countdown"></div>
+      </div>
+    </div><!-- /#widget-flashcard -->
+
+    <!-- Ukraine news panel -->
+    <div id="widget-news-ua" class="widget">
+      <div id="news-ua-loading" class="status-msg">Loading news…</div>
+      <div id="news-ua-error" class="error-msg" style="display:none">⚠ updating…</div>
+      <div id="news-ua-content" style="display:none">
+        <div class="news-col-label">Ukraine</div>
+        <ul id="news-list-ukraine" class="news-col-list"></ul>
+      </div>
+    </div><!-- /#widget-news-ua -->
 
   </div><!-- /#dashboard -->
 
-  <!-- Full-screen black overlay shown during 22:00–07:00 -->
+  <!-- Full-screen black overlay shown during 23:00–07:00 -->
   <div id="sleep-screen"></div>
 
   <!-- ES5-compatible scripts, loaded in dependency order -->
   <script src="js/weather.js"></script>
   <script src="js/news.js"></script>
+<<<<<<< HEAD
   <script src="js/calendar.js"></script>
+=======
+  <script src="js/flashcard-data.js"></script>
+  <script src="js/flashcard-phrases.js"></script>
+  <script src="js/flashcard.js"></script>
+>>>>>>> origin/main
   <script src="js/dashboard.js"></script>
 
 </body>
