@@ -171,3 +171,27 @@ CACHE_NEWS_TTL_MS=300000          # 5 min
 - Sunrise/sunset times from the OpenWeatherMap response displayed below weather
 - A second news column with a different RSS feed
 - Ambient color theme that shifts from cool blue (night) to warm yellow (day) based on server time
+
+<!-- DSC START -->
+## Source documents
+
+If user references a document (that is not txt or md) in Input folder, see if the file is already converted into Materials\AI-Generated\pipeline\converted-inputs in text format (easier to process). Materials folder is also converted (Materials\AI-Generated\pipeline\converted-materials). If no converted files found, run dsc-convert skill.
+Run all scripts in the working folder (where the Input folder is placed), if not specified otherwise.
+
+## Log papercuts
+
+When you encounter small friction while working—a failed tool call, confusing
+setup, flaky command, stale cache, misleading error, missing helper, or
+non-obvious gotcha—record it in `PAPERCUTS.md`.
+Create the file if it does not exist. Append one entry in this format:
+
+```
+## YYYY-MM-DD HH:MM — <model>
+<What you were doing> → <what got in the way>. Include a possible cause or fix
+when useful.
+```
+
+Log papercuts proactively when they occur, but do not interrupt the main task.
+Do not add duplicate entries. Papercuts are minor workflow friction, distinct
+from completed-work logs and real bugs or tracked issues.
+<!-- DSC END -->
