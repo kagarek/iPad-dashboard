@@ -6,3 +6,6 @@ Looking up iCloud calendar share links on the Mac → `~/Library/Calendars` is b
 
 ## 2026-10-21 17:45 — claude-opus-5-5
 Starting the server → crashed with "Cannot find module node-ical" because the calendar commit added a dependency but npm install had not been re-run. Fix: run `npm install` in server/ after pulling.
+
+## 2026-10-21 18:30 — claude-opus-5-5
+Pushing to GitHub → "Invalid username or token". The token saved by the git credential store has expired or been revoked (pull still works because the repo is public). Fix: create a new GitHub personal access token and push once in a terminal to save it.
