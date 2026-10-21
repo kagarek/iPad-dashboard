@@ -1,25 +1,18 @@
 // dashboard.js — orchestrator.
-// Starts polling loops for weather, news and calendar, and drives the live clock.
+// Starts polling loops for weather, news, calendar and flashcards, and drives the live clock.
 // Must stay ES5-compatible (no const/let/arrow functions/template literals).
 
-/* global renderWeather, renderNews, renderCalendar, initCalendarSettings */
+/* global renderWeather, renderNews, renderCalendar, initCalendarSettings, renderFlashcard */
 
 (function() {
 
   // --- Configuration ---
-<<<<<<< HEAD
-  var WEATHER_INTERVAL_MS = 10 * 60 * 1000;   // 10 minutes
-  var NEWS_INTERVAL_MS    =  5 * 60 * 1000;   //  5 minutes
-  var CALENDAR_INTERVAL_MS = 5 * 60 * 1000;   //  5 minutes
-  var WAKE_HOUR           = 7;                 // show dashboard from 07:00
-  var SLEEP_HOUR          = 22;                // blank screen from 22:00
-=======
   var WEATHER_INTERVAL_MS   = 10 * 60 * 1000;   // 10 minutes
   var NEWS_INTERVAL_MS      =  5 * 60 * 1000;   //  5 minutes
+  var CALENDAR_INTERVAL_MS  =  5 * 60 * 1000;   //  5 minutes
   var FLASHCARD_INTERVAL_MS =  5 * 60 * 1000;   //  5 minutes
   var WAKE_HOUR             = 7;                 // show dashboard from 07:00
   var SLEEP_HOUR            = 23;                // blank screen from 23:00
->>>>>>> origin/main
 
   // _sleeping tracks the last known sleep state to detect transitions.
   var _sleeping = null;
@@ -124,16 +117,14 @@
     fetchNews();
     setInterval(fetchNews, NEWS_INTERVAL_MS);
 
-<<<<<<< HEAD
     fetchCalendar();
     setInterval(fetchCalendar, CALENDAR_INTERVAL_MS);
 
     // Tapping the calendar header flips to "choose calendars"; reload events after saving.
     initCalendarSettings(fetchCalendar);
-=======
+
     renderFlashcard();
     setInterval(renderFlashcard, FLASHCARD_INTERVAL_MS);
->>>>>>> origin/main
   }
 
   // Wait for DOM to be ready (iOS 9 safe)

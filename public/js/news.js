@@ -61,11 +61,7 @@ function renderList(listId, items) {
   }
 }
 
-<<<<<<< HEAD
-// renderNews — updates the news column from the /categories API response,
-=======
 // renderNews — updates the Ukraine news panel from the /categories API response,
->>>>>>> origin/main
 // or shows the error state if data is null or contains an error field.
 function renderNews(data) {
   var uaLoading = document.getElementById('news-ua-loading');
